@@ -30,6 +30,10 @@ public class EventService {
         return eventRepository.findByLocation_Id(locationId);
     }
 
+    public List<EventRepository.LocationEventCount> getEventCountsByLocation() {
+        return eventRepository.countEventsByLocation();
+    }
+
     public EventModel saveEvent(EventModel event) {
         return eventRepository.save(event);
     }

@@ -1,6 +1,7 @@
 package com.itevents.main.controllers;
 
 import com.itevents.main.models.EventModel;
+import com.itevents.main.repositories.EventRepository;
 import com.itevents.main.services.EventService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,11 @@ public class EventController {
     @GetMapping("/location/{locationId}")
     public List<EventModel> getEventsByLocation(@PathVariable Long locationId) {
         return eventService.getEventsByLocationId(locationId);
+    }
+
+    @GetMapping("/count-by-location")
+    public List<EventRepository.LocationEventCount> countByLocation() {
+        return eventService.getEventCountsByLocation();
     }
 
     @PostMapping
