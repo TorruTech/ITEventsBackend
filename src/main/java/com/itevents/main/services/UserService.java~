@@ -1,0 +1,4 @@
+package com.itevents.main.services;
+
+public class UserService {
+}
