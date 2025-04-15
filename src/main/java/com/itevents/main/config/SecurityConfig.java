@@ -11,27 +11,27 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors() // Habilita CORS
                 .and()
-                .authorizeRequests()
+                .csrf().disable() // ⚠️ Desactiva CSRF en desarrollo si no usas formularios
+                .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated();
+
         return http.build();
     }
 
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.addAllowedOrigin("*");
-        corsConfig.addAllowedMethod("GET");
-        corsConfig.addAllowedMethod("POST");
-        corsConfig.addAllowedMethod("PUT");
-        corsConfig.addAllowedMethod("DELETE");
+        corsConfig.addAllowedOrigin("*"); // o el dominio de tu app móvil
+        corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");
+        corsConfig.setAllowCredentials(false); // ponlo en true si usas tokens o cookies
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);

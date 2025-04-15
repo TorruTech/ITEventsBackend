@@ -26,6 +26,10 @@ public class EventService {
         return eventRepository.findById(id);
     }
 
+    public List<EventModel> getEventsByLocationId(Long locationId) {
+        return eventRepository.findByLocation_Id(locationId);
+    }
+
     public EventModel saveEvent(EventModel event) {
         return eventRepository.save(event);
     }

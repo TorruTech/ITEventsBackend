@@ -27,6 +27,11 @@ public class EventController {
         return eventService.getById(id);
     }
 
+    @GetMapping("/location/{locationId}")
+    public List<EventModel> getEventsByLocation(@PathVariable Long locationId) {
+        return eventService.getEventsByLocationId(locationId);
+    }
+
     @PostMapping
     public EventModel createEvent(@RequestBody EventModel event) {
         return eventService.saveEvent(event);
