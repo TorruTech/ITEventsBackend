@@ -17,8 +17,8 @@ public class UserModel {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(nullable = false, length = 255)
-    private String password;
+    @Column(nullable = false, name="firebase_uid", length = 255)
+    private String firebaseUID;
 
     @Column(name = "login_provider", length = 50)
     private String loginProvider;
@@ -53,12 +53,12 @@ public class UserModel {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getFirebaseUID() {
+        return firebaseUID;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setFirebaseUID(String firebaseUID) {
+        this.firebaseUID = firebaseUID;
     }
 
     public String getLoginProvider() {

@@ -37,7 +37,7 @@ public class UserController {
         return userService.getUserById(id).map(user -> {
             user.setUsername(updated.getUsername());
             user.setEmail(updated.getEmail());
-            user.setPassword(updated.getPassword());
+            user.setFirebaseUID(updated.getFirebaseUID());
             user.setLoginProvider(updated.getLoginProvider());
             user.setRegistrationDate(updated.getRegistrationDate());
             user.setRole(updated.getRole());
