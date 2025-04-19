@@ -28,12 +28,6 @@ public class EventModel {
     @Column(name = "image_url", length = 255)
     private String imageUrl;
 
-    @Column
-    private Double latitude;
-
-    @Column
-    private Double longitude;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryModel category;
@@ -41,8 +35,6 @@ public class EventModel {
     @ManyToOne
     @JoinColumn(name = "location_id")
     private LocationModel location;
-
-    // Getters y Setters
 
     public Long getId() {
         return id;
@@ -98,22 +90,6 @@ public class EventModel {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
     }
 
     public CategoryModel getCategory() {
