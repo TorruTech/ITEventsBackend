@@ -33,5 +33,5 @@ build/
 .vscode/
 
 ### Firebase ###
-src/main/resources/firebase/serviceAccountKey.json
+src/main/resources/firebase/itevents-firebase-key.json
 
