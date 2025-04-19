@@ -1,0 +1,4 @@
+package com.itevents.main.dtos;
+
+public class FirebaseUserRequest {
+}
