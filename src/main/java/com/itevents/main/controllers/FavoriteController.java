@@ -26,10 +26,11 @@ public class FavoriteController {
     @Autowired
     private EventRepository eventRepository;
 
-    // Get all favorites by user
-    @GetMapping("/user/{userId}")
-    public List<FavoriteModel> getFavoritesByUser(@PathVariable Long userId) {
-        return favoriteRepository.findByUserId(userId);
+    // Get favorite events by user
+    @GetMapping("/user/{userId}/events")
+    public ResponseEntity<?> getFavoriteEventsByUser(@PathVariable Long userId) {
+        List<EventModel> favoriteEvents = favoriteRepository.findFavoriteEventsByUserId(userId);
+        return ResponseEntity.ok(favoriteEvents);
     }
 
     // Add a favorite event to a user

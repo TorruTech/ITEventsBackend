@@ -1,4 +1,3 @@
-// ✅ Controlador para gestionar favoritos
 package com.itevents.main.controllers;
 
 import com.itevents.main.models.FavoriteModel;
@@ -27,20 +26,19 @@ public class FavoriteController {
     @Autowired
     private EventRepository eventRepository;
 
-    // ✅ Obtener todos los favoritos de un usuario
+    // Get favorite events by user
     @GetMapping("/user/{userId}")
-    public List<FavoriteModel> getFavoritesByUser(@PathVariable Long userId) {
+    public List<EventModel> getFavoriteEventsByUser(@PathVariable Long userId) {
         return favoriteRepository.findByUserId(userId);
     }
-
-    // ✅ Añadir un nuevo favorito
+    
+    // Add a favorite event to a user
     @PostMapping
     public ResponseEntity<?> addFavorite(@RequestBody FavoriteModel fav) {
         Optional<UserModel> user = userRepository.findById(fav.getUser().getId());
         Optional<EventModel> event = eventRepository.findById(fav.getEvent().getId());
 
         if (user.isPresent() && event.isPresent()) {
-            // Evitar duplicados
             if (favoriteRepository.existsByUserIdAndEventId(user.get().getId(), event.get().getId())) {
                 return ResponseEntity.ok("Ya existe en favoritos");
             }
@@ -53,7 +51,7 @@ public class FavoriteController {
         return ResponseEntity.badRequest().body("Usuario o evento no encontrado");
     }
 
-    // ✅ Eliminar un favorito por usuario y evento
+    // Delete a favorite event from a user
     @DeleteMapping("/user/{userId}/event/{eventId}")
     public ResponseEntity<?> deleteFavorite(@PathVariable Long userId, @PathVariable Long eventId) {
         Optional<FavoriteModel> fav = favoriteRepository.findByUserIdAndEventId(userId, eventId);
@@ -64,7 +62,7 @@ public class FavoriteController {
         return ResponseEntity.notFound().build();
     }
 
-    // ✅ Comprobar si un evento está en favoritos
+    // Check if an event is a favorite
     @GetMapping("/check")
     public boolean isFavorite(@RequestParam Long userId, @RequestParam Long eventId) {
         return favoriteRepository.existsByUserIdAndEventId(userId, eventId);
