@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FavoriteRepository extends JpaRepository<FavoriteModel, Long> {
+    List<FavoriteModel> findByUserId(Long userId);
     @Query("SELECT f.event FROM FavoriteModel f WHERE f.user.id = :userId")
     List<EventModel> findFavoriteEventsByUserId(@Param("userId") Long userId);
     Optional<FavoriteModel> findByUserIdAndEventId(Long userId, Long eventId);
