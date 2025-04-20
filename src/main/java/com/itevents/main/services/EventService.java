@@ -43,6 +43,8 @@ public class EventService {
             event.setName(request.getName());
             event.setDate(request.getDate());
             event.setDescription(request.getDescription());
+            event.setLatitude(request.getLatitude());
+            event.setLongitude(request.getLongitude());
             event.setLabels(request.getLabels());
             event.setDateDescription(request.getDateDescription());
             event.setImageUrl(request.getImageUrl());
