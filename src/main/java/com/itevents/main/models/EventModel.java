@@ -1,6 +1,7 @@
 package com.itevents.main.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
 
 @Entity
 @Table(name = "events")
@@ -33,6 +34,15 @@ public class EventModel {
 
     @Column
     private Double longitude;
+
+    @Column(name = "requires_ticket", nullable = false)
+    private boolean requiresTicket = false;
+
+    @Column(name = "total_tickets")
+    private Integer totalTickets;
+
+    @Column(name = "available_tickets")
+    private Integer availableTickets;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -116,6 +126,30 @@ public class EventModel {
         this.longitude = longitude;
     }
 
+    public boolean isRequiresTicket() {
+        return requiresTicket;
+    }
+
+    public void setRequiresTicket(boolean requiresTicket) {
+        this.requiresTicket = requiresTicket;
+    }
+
+    public Integer getTotalTickets() {
+        return totalTickets;
+    }
+
+    public void setTotalTickets(Integer totalTickets) {
+        this.totalTickets = totalTickets;
+    }
+
+    public Integer getAvailableTickets() {
+        return availableTickets;
+    }
+
+    public void setAvailableTickets(Integer availableTickets) {
+        this.availableTickets = availableTickets;
+    }
+
     public CategoryModel getCategory() {
         return category;
     }
@@ -131,4 +165,14 @@ public class EventModel {
     public void setLocation(LocationModel location) {
         this.location = location;
     }
+
+    @AssertTrue(message = "If tickets are required, total and available tickets must be provided.")
+    public boolean isTicketDataValid() {
+        if (requiresTicket) {
+            return totalTickets != null && availableTickets != null;
+        }
+        return true;
+    }
 }
+
+

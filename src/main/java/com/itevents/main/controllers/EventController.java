@@ -3,6 +3,8 @@ package com.itevents.main.controllers;
 import com.itevents.main.models.EventModel;
 import com.itevents.main.repositories.EventRepository;
 import com.itevents.main.services.EventService;
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/events")
+@Validated
 public class EventController {
 
     private final EventService eventService;
@@ -39,12 +42,12 @@ public class EventController {
     }
 
     @PostMapping
-    public EventModel createEvent(@RequestBody EventModel event) {
+    public EventModel createEvent(@Valid @RequestBody EventModel event) {
         return eventService.saveEvent(event);
     }
 
     @PutMapping("/{id}")
-    public Optional<EventModel> updateEvent(@PathVariable Long id, @RequestBody EventModel event) {
+    public Optional<EventModel> updateEvent(@PathVariable Long id, @Valid @RequestBody EventModel event) {
         return eventService.updateById(id, event);
     }
 

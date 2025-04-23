@@ -29,7 +29,6 @@ public class RegistrationController {
 
     @GetMapping("/user/{userId}")
     public List<RegistrationModel> getByUser(@PathVariable Long userId) {
-        // Necesitarías un método custom en el repo, ej: findByUserId(userId)
         return registrationService.getRegistrationsByUserId(userId);
     }
 }
