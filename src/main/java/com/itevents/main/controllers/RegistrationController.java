@@ -60,6 +60,19 @@ public class RegistrationController {
         return ResponseEntity.notFound().build();
     }
 
+    // Delete a registration by user and event
+    @DeleteMapping
+    public ResponseEntity<?> deleteByUserAndEvent(
+            @RequestParam Long userId,
+            @RequestParam Long eventId
+    ) {
+        boolean deleted = registrationService.deleteByUserAndEvent(userId, eventId);
+        if (deleted) {
+            return ResponseEntity.ok("Reserva eliminada");
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     // Get all registrations for a user
     @GetMapping("/user/{userId}")
     public List<EventModel> getByUser(@PathVariable Long userId) {
@@ -70,5 +83,15 @@ public class RegistrationController {
     @GetMapping("/count/event/{eventId}")
     public Long getReservationCount(@PathVariable Long eventId) {
         return registrationService.countByEventId(eventId);
+    }
+
+    // Check if a user is registered for a specific event
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> isUserRegistered(
+            @RequestParam Long userId,
+            @RequestParam Long eventId
+    ) {
+        boolean registered = registrationService.isUserRegisteredForEvent(userId, eventId);
+        return ResponseEntity.ok(registered);
     }
 }

@@ -76,6 +76,22 @@ public class RegistrationService {
         return false;
     }
 
+    public boolean deleteByUserAndEvent(Long userId, Long eventId) {
+        Optional<RegistrationModel> regOpt = registrationRepository.findByUserIdAndEventId(userId, eventId);
+        if (regOpt.isPresent()) {
+            RegistrationModel reg = regOpt.get();
+            EventModel event = reg.getEvent();
+
+            if (event.isRequiresTicket()) {
+                event.setAvailableTickets(event.getAvailableTickets() + reg.getTicketsReserved());
+                eventRepository.save(event);
+            }
+
+            registrationRepository.delete(reg);
+            return true;
+        }
+        return false;
+    }
 
     public List<EventModel> getEventsByUserId(Long userId) {
         return registrationRepository.findByUser_Id(userId)
@@ -86,6 +102,10 @@ public class RegistrationService {
 
     public Long countByEventId(Long eventId) {
         return registrationRepository.countByEvent_Id(eventId);
+    }
+
+    public boolean isUserRegisteredForEvent(Long userId, Long eventId) {
+        return registrationRepository.existsByUserIdAndEventId(userId, eventId);
     }
 
 }

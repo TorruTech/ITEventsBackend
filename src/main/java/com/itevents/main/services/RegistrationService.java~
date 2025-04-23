@@ -57,7 +57,7 @@ public class RegistrationService {
 
         return registrationRepository.save(registration);
     }
-    
+
     public boolean deleteRegistration(Long id) {
         Optional<RegistrationModel> regOpt = registrationRepository.findById(id);
         if (regOpt.isPresent()) {
@@ -86,6 +86,10 @@ public class RegistrationService {
 
     public Long countByEventId(Long eventId) {
         return registrationRepository.countByEvent_Id(eventId);
+    }
+
+    public boolean isUserRegisteredForEvent(Long userId, Long eventId) {
+        return registrationRepository.existsByUserIdAndEventId(userId, eventId);
     }
 
 }
