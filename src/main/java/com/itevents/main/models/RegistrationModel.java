@@ -57,6 +57,11 @@ public class RegistrationModel {
         this.enrolledAt = enrolledAt;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        this.enrolledAt = LocalDateTime.now();
+    }
+
     public int getTicketsReserved() {
         return ticketsReserved;
     }
