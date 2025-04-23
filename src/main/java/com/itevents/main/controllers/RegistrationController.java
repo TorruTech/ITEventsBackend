@@ -45,7 +45,9 @@ public class RegistrationController {
             return ResponseEntity.badRequest().body("No hay entradas disponibles para este evento");
         }
 
-        return ResponseEntity.ok(registrationService.createReservation(user.get(), event.get()));
+        int ticketsReserved = registration.getTicketsReserved();
+
+        return ResponseEntity.ok(registrationService.createReservation(user.get(), event.get(), ticketsReserved));
     }
 
     // Delete a registration
