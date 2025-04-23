@@ -12,13 +12,18 @@ import java.util.Optional;
 @Repository
 public interface RegistrationRepository extends JpaRepository<RegistrationModel, Long> {
 
+    // Verificar si existe una reserva entre usuario y evento
     boolean existsByUserAndEvent(UserModel user, EventModel event);
 
+    // Versión por IDs (más cómoda desde controlador)
     boolean existsByUser_IdAndEvent_Id(Long userId, Long eventId);
 
+    // Buscar una reserva específica
     Optional<RegistrationModel> findByUserAndEvent(UserModel user, EventModel event);
 
+    // Obtener todas las reservas de un usuario
     List<RegistrationModel> findByUser_Id(Long userId);
 
+    // Contar cuántas reservas tiene un evento
     Long countByEvent_Id(Long eventId);
 }

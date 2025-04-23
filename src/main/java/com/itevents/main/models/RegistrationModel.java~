@@ -24,7 +24,7 @@ public class RegistrationModel {
 
     @Column(name = "tickets_reserved", nullable = false)
     private int ticketsReserved = 1;
-
+    
     public Long getId() {
         return id;
     }
@@ -56,13 +56,4 @@ public class RegistrationModel {
     public void setEnrolledAt(LocalDateTime enrolledAt) {
         this.enrolledAt = enrolledAt;
     }
-
-    public int getTicketsReserved() {
-        return ticketsReserved;
-    }
-
-    public void setTicketsReserved(int ticketsReserved) {
-        this.ticketsReserved = ticketsReserved;
-    }
-
 }
