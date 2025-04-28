@@ -2,11 +2,14 @@ package com.itevents.main.controllers;
 
 import com.itevents.main.models.UserModel;
 import com.itevents.main.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "User", description = "Endpoints para gestión de usuarios")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -17,21 +20,25 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Devuelve todos los usuarios")
     @GetMapping
     public List<UserModel> getAllUsers() {
         return userService.getAllUsers();
     }
 
+    @Operation(summary = "Devuelve un usuario por id")
     @GetMapping("/{id}")
     public Optional<UserModel> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
+    @Operation(summary = "Crea un nuevo usuario")
     @PostMapping
     public UserModel createUser(@RequestBody UserModel user) {
         return userService.saveUser(user);
     }
 
+    @Operation(summary = "Actualiza un usuario por id")
     @PutMapping("/{id}")
     public Optional<UserModel> updateUser(@PathVariable Long id, @RequestBody UserModel updated) {
         return userService.getUserById(id).map(user -> {
@@ -45,6 +52,7 @@ public class UserController {
         });
     }
 
+    @Operation(summary = "Elimina un usuario por id")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

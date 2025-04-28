@@ -7,12 +7,15 @@ import com.itevents.main.services.RegistrationService;
 import com.itevents.main.repositories.EventRepository;
 import com.itevents.main.repositories.UserRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "Registration", description = "Endpoints para gestionar las reservas")
 @RestController
 @RequestMapping("/api/registrations")
 public class RegistrationController {
@@ -27,7 +30,7 @@ public class RegistrationController {
         this.eventRepository = eventRepository;
     }
 
-    // Create a new registration
+    @Operation(summary = "Crea una nueva reserva")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody RegistrationModel registration) {
         Optional<UserModel> user = userRepository.findById(registration.getUser().getId());
@@ -50,7 +53,7 @@ public class RegistrationController {
         return ResponseEntity.ok(registrationService.createReservation(user.get(), event.get(), ticketsReserved));
     }
 
-    // Delete a registration
+    @Operation(summary = "Elimina una reserva por ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         boolean deleted = registrationService.deleteRegistration(id);
@@ -60,7 +63,7 @@ public class RegistrationController {
         return ResponseEntity.notFound().build();
     }
 
-    // Delete a registration by user and event
+    @Operation(summary = "Elimina una reserva por usuario y evento")
     @DeleteMapping
     public ResponseEntity<?> deleteByUserAndEvent(
             @RequestParam Long userId,
@@ -73,19 +76,19 @@ public class RegistrationController {
         return ResponseEntity.notFound().build();
     }
 
-    // Get all registrations for a user
+    @Operation(summary = "Obtiene todas las reservas de un usuario")
     @GetMapping("/user/{userId}")
     public List<EventModel> getByUser(@PathVariable Long userId) {
         return registrationService.getEventsByUserId(userId);
     }
 
-    // Get all registrations for an event
+    @Operation(summary = "Obtiene el número de reservas para un evento")
     @GetMapping("/count/event/{eventId}")
     public Long getReservationCount(@PathVariable Long eventId) {
         return registrationService.countByEventId(eventId);
     }
 
-    // Check if a user is registered for a specific event
+    @Operation(summary = "Comprueba si un usuario está registrado para un evento")
     @GetMapping("/check")
     public ResponseEntity<Boolean> isUserRegistered(
             @RequestParam Long userId,

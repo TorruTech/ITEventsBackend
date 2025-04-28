@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseToken;
 import com.itevents.main.dtos.FirebaseUserRequest;
 import com.itevents.main.models.UserModel;
 import com.itevents.main.repositories.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 import java.util.Optional;
 
+@Tag(name = "Firebase Authentication", description = "Endpoints para gestionar autenticación con Firebase")
 @RestController
 @RequestMapping("/api/auth")
 public class FirebaseAuthController {
@@ -21,6 +24,7 @@ public class FirebaseAuthController {
     @Autowired
     private UserRepository userRepository;
 
+    @Operation(summary = "Registra o inicia sesión un usuario con Firebase")
     @PostMapping("/firebase")
     public ResponseEntity<?> registerOrLoginUser(
             @RequestHeader("Authorization") String authorization,
@@ -30,7 +34,6 @@ public class FirebaseAuthController {
             String idToken = authorization.replace("Bearer ", "");
             FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
 
-            // Check if email matches the one in the request
             if (!decodedToken.getEmail().equals(request.getEmail())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email mismatch.");
             }
@@ -41,7 +44,6 @@ public class FirebaseAuthController {
                 return ResponseEntity.ok(existingUser.get());
             }
 
-            // Create a new user
             UserModel newUser = new UserModel();
             newUser.setEmail(request.getEmail());
             newUser.setUsername(request.getUsername());

@@ -6,6 +6,8 @@ import com.itevents.main.models.EventModel;
 import com.itevents.main.repositories.FavoriteRepository;
 import com.itevents.main.repositories.UserRepository;
 import com.itevents.main.repositories.EventRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "Favorite", description = "Endpoints para gestionar favoritos")
 @RestController
 @RequestMapping("/api/favorites")
 public class FavoriteController {
@@ -26,14 +29,14 @@ public class FavoriteController {
     @Autowired
     private EventRepository eventRepository;
 
-    // Get favorite events by user
+    @Operation(summary = "Devuelve los eventos favoritos de un usuario")
     @GetMapping("/user/{userId}/events")
     public ResponseEntity<?> getFavoriteEventsByUser(@PathVariable Long userId) {
         List<EventModel> favoriteEvents = favoriteRepository.findFavoriteEventsByUserId(userId);
         return ResponseEntity.ok(favoriteEvents);
     }
 
-    // Add a favorite event to a user
+    @Operation(summary = "Inserta un evento favorito")
     @PostMapping
     public ResponseEntity<?> addFavorite(@RequestBody FavoriteModel fav) {
         Optional<UserModel> user = userRepository.findById(fav.getUser().getId());
@@ -52,7 +55,7 @@ public class FavoriteController {
         return ResponseEntity.badRequest().body("Usuario o evento no encontrado");
     }
 
-    // Delete a favorite event from a user
+    @Operation(summary = "Elimina un evento favorito")
     @DeleteMapping("/user/{userId}/event/{eventId}")
     public ResponseEntity<?> deleteFavorite(@PathVariable Long userId, @PathVariable Long eventId) {
         Optional<FavoriteModel> fav = favoriteRepository.findByUserIdAndEventId(userId, eventId);
@@ -63,7 +66,7 @@ public class FavoriteController {
         return ResponseEntity.notFound().build();
     }
 
-    // Check if an event is a favorite
+    @Operation(summary = "Comprueba si un evento es favorito")
     @GetMapping("/check")
     public boolean isFavorite(@RequestParam Long userId, @RequestParam Long eventId) {
         return favoriteRepository.existsByUserIdAndEventId(userId, eventId);
