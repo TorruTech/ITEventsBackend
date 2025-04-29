@@ -4,6 +4,7 @@ import com.itevents.main.models.UserModel;
 import com.itevents.main.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,5 +57,19 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    @Operation(summary = "Actualiza el avatar de un usuario por id")
+    @PatchMapping("/{id}/avatar")
+    public ResponseEntity<?> updateAvatar(@PathVariable Long id, @RequestBody UserModel userUpdate) {
+        Optional<UserModel> optionalUser = userService.getUserById(id);
+        if (optionalUser.isPresent()) {
+            UserModel user = optionalUser.get();
+            user.setAvatarUrl(userUpdate.getAvatarUrl());
+            userService.saveUser(user);
+            return ResponseEntity.ok("Avatar actualizado correctamente");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -29,6 +29,9 @@ public class UserModel {
     @Column(length = 50)
     private String role;
 
+    @Column(name = "avatar_url", length = 500)
+    private String avatarUrl;
+
     public Long getId() {
         return id;
     }
@@ -83,5 +86,13 @@ public class UserModel {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }
