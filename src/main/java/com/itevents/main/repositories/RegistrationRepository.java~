@@ -16,6 +16,8 @@ public interface RegistrationRepository extends JpaRepository<RegistrationModel,
 
     boolean existsByUserIdAndEventId(Long userId, Long eventId);
 
+    Optional<RegistrationModel> findByUserIdAndEventId(Long userId, Long eventId);
+
     Optional<RegistrationModel> findByUserAndEvent(UserModel user, EventModel event);
 
     List<RegistrationModel> findByUser_Id(Long userId);

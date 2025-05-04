@@ -108,4 +108,8 @@ public class RegistrationService {
         return registrationRepository.existsByUserIdAndEventId(userId, eventId);
     }
 
+    public Long countByUserId(Long userId) {
+        return registrationRepository.countByUser_Id(userId);
+    }
+
 }

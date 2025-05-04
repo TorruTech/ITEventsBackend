@@ -36,10 +36,10 @@ public class FavoriteController {
         return ResponseEntity.ok(favoriteEvents);
     }
 
-    @Operation(summary = "Devuelve el número de favoritos de un usuario")
+    @Operation(summary = "Devuelve el número de eventos favoritos de un usuario")
     @GetMapping("/user/{userId}/count")
-    public ResponseEntity<Long> countFavoritesByUser(@PathVariable Long userId) {
-        Long count = favoriteRepository.countByUser_Id(userId);
+    public ResponseEntity<?> countFavoritesByUser(@PathVariable Long userId) {
+        long count = favoriteRepository.countByUserId(userId);
         return ResponseEntity.ok(count);
     }
 

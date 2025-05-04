@@ -104,4 +104,5 @@ public class RegistrationController {
         long count = registrationService.countByUserId(userId);
         return ResponseEntity.ok(count);
     }
+
 }

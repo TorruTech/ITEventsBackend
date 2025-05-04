@@ -23,4 +23,6 @@ public interface RegistrationRepository extends JpaRepository<RegistrationModel,
     List<RegistrationModel> findByUser_Id(Long userId);
 
     Long countByEvent_Id(Long eventId);
+
+    Long countByUser_Id(Long userId);
 }
