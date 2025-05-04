@@ -51,6 +51,7 @@ public class EventService {
             event.setLabels(request.getLabels());
             event.setDateDescription(request.getDateDescription());
             event.setImageUrl(request.getImageUrl());
+            event.setWebUrl(request.getWebUrl());
             event.setCategory(request.getCategory());
             event.setLocation(request.getLocation());
             return eventRepository.save(event);

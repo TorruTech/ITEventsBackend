@@ -29,6 +29,9 @@ public class EventModel {
     @Column(name = "image_url", length = 255)
     private String imageUrl;
 
+    @Column(name = "web_url", columnDefinition = "TEXT")
+    private String webUrl;
+
     @Column
     private Double latitude;
 
@@ -108,6 +111,14 @@ public class EventModel {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getWebUrl() {
+        return webUrl;
+    }
+
+    public void setWebUrl(String webUrl) {
+        this.webUrl = webUrl;
     }
 
     public Double getLatitude() {

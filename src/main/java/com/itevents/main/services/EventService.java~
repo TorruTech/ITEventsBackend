@@ -45,6 +45,9 @@ public class EventService {
             event.setDescription(request.getDescription());
             event.setLatitude(request.getLatitude());
             event.setLongitude(request.getLongitude());
+            event.setRequiresTicket(request.isRequiresTicket());
+            event.setTotalTickets(request.getTotalTickets());
+            event.setAvailableTickets(request.getAvailableTickets());
             event.setLabels(request.getLabels());
             event.setDateDescription(request.getDateDescription());
             event.setImageUrl(request.getImageUrl());
